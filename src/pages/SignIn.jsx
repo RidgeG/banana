@@ -1,20 +1,51 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import {AuthContext} from "../components/AuthContext";
+
 
 function SignIn() {
-  return (
-    <>
-      <h1>Inloggen</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
+    const { login } = useContext(AuthContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-      <form>
-        <p>*invoervelden*</p>
-        <button>Inloggen</button>
-      </form>
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        login(email); // Geef het e-mailadres door aan de login-functie.
+    };
 
-      <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>
-    </>
-  );
+    return (
+        <>
+            <h1>Inloggen</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Emailadres:
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Wachtwoord:
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </label>
+                <button type="submit">Inloggen</button>
+            </form>
+
+            <p>
+                Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.
+            </p>
+        </>
+    );
 }
 
 export default SignIn;
+
